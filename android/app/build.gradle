@@ -1,3 +1,4 @@
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -34,6 +35,7 @@ android {
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -48,3 +50,9 @@ android {
 flutter {
     source '../..'
 }
+
+//https://firebase.flutter.dev/docs/auth/usage
+dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
+}
+apply plugin: 'com.google.gms.google-services'
