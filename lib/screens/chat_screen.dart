@@ -40,13 +40,13 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void getStreamMessages() async {
-    await for (var snapshot in _fireStore.collection('messages').snapshots()) {
-      for (var message in snapshot.docs) {
-        print(message.data());
-      }
-    }
-  }
+  // void getStreamMessages() async {
+  //   await for (var snapshot in _fireStore.collection('messages').snapshots()) {
+  //     for (var message in snapshot.docs) {
+  //       print(message.data());
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -122,10 +122,10 @@ class MessageStream extends StatelessWidget {
           );
         }
 
-        final messages = snapshots.data;
+        final messages = snapshots.data!.docs.reversed;
         List<MessageBubble> messageBubbles = [];
 
-        for (var message in messages!.docs.reversed) {
+        for (var message in messages) {
           final messageText = message.get('text');
           final messageSender = message.get('sender');
 
@@ -141,7 +141,7 @@ class MessageStream extends StatelessWidget {
 
         return Expanded(
           child: ListView(
-               reverse: true,
+              reverse: true,
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               children: messageBubbles),
         );
@@ -180,7 +180,7 @@ class MessageBubble extends StatelessWidget {
                     topRight: Radius.circular(30.0),
                   ),
             elevation: 5,
-            color: isMe! ? Colors.lightBlueAccent : Colors.white24,
+            color: isMe! ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 10.0,
